@@ -1,0 +1,9 @@
+configure
+{%- for interface in device.interfaces.all() %}
+{%- if interface.ip_addresses.all() %}
+{%- for ip in interface.ip_addresses.all() %}
+set interfaces {{ interface.name.split('.')[0].split(':')[0] }} unit 0 family inet address {{ip}}
+{%- endfor %}
+{%- endif %}
+{%- endfor %}
+commit

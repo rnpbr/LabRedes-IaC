@@ -1,0 +1,13 @@
+snmp {
+    view all {
+        oid .1;
+    }
+    client-list 172.10.10.<IP do coletor>;
+    community public {
+        view all;
+        authorization read-write;
+        clients {
+            172.10.10.0/24;
+        }
+    }
+}

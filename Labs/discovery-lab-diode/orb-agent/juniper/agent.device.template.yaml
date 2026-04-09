@@ -1,0 +1,65 @@
+orb:
+  config_manager:
+    active: local
+  backends:
+    device_discovery:
+    network_discovery:
+    common:
+      diode:
+        target: grpc://${DIODE_HOST}/diode
+        client_id: ${DIODE_CLIENT_ID}
+        client_secret: ${DIODE_CLIENT_SECRET}
+        agent_name: ${AGENT_NAME}
+  policies:
+    network_discovery:
+      network_policy_1:
+        config:
+          defaults:
+            description: "IP discovered by network discovery"
+            tags: ["network-discovery"]
+        scope:
+          targets:
+            - ${DOCKER_SUBNET}
+    device_discovery:
+      device_policy_1:
+        config:
+          defaults:
+            site: ${SITE_NAME}
+            description: "discovered Site by device discovery"
+            tags: ["device-discovery"]
+            role: "router"
+            device:
+              description: "Device discovered by device discovery"
+              tags: ["device-discovery"]
+            interface:
+              description: "Interface discovered by device discovery"
+              tags: ["device-discovery"]
+            ipaddress:
+              description: "Ip discovered by device discovery"
+              comments: "my comment"
+              tags: ["device-discovery"]
+            prefix:
+              description: "Prefix discovered by device discovery"
+              tags: ["device-discovery"]
+            vlan:
+              description: "Vlan discovered by device discovery"
+              tags: ["device-discovery"]
+        scope:
+          - driver: junos
+            hostname: 172.10.10.12
+            username: ${DEVICE_USERNAME}
+            password: ${JUNIPER_PASSWORD}
+            optional_args:
+              insecure: True
+          - driver: junos
+            hostname: 172.10.10.17
+            username: ${DEVICE_USERNAME}
+            password: ${JUNIPER_PASSWORD}
+            optional_args:
+              insecure: True
+          - driver: junos
+            hostname: 172.10.10.18
+            username: ${DEVICE_USERNAME}
+            password: ${JUNIPER_PASSWORD}
+            optional_args:
+              insecure: True

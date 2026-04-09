@@ -1,0 +1,11 @@
+protocols {
+    ospf {
+        area 0.0.0.10 {
+            {%- for interface in device.interfaces.all() %}
+                {%- if interface.ip_addresses.all() %}
+                interface {{interface.name.split('.')[0].split(':')[0]}};
+                {%- endif %}
+            {%- endfor %}
+        }
+    }
+}

@@ -1,0 +1,67 @@
+name: monitoramentomento-zabbix-huawei
+topology:
+    nodes:
+        graphite:
+            kind: linux
+            image: netreplica/graphite:latest
+            env:
+                HOST_CONNECTION: ${SSH_CONNECTION}
+            binds:
+                - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+                - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+            ports:
+                - 8080:80
+            exec:
+                - sh -c 'graphite_motd.sh 8080'
+            labels:
+                graph-hide: yes
+
+        node1:
+            kind: huawei_vrp
+            image: vrnetlab/huawei_vrp:ne40e-8.180
+            startup-config: node1.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: node1
+                platform: Ne40e
+                vendor: Huawei
+                model: MX
+
+        node2:
+            kind: huawei_vrp
+            image: vrnetlab/huawei_vrp:ne40e-8.180
+            startup-config: node2.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: node2
+                platform: Ne40e
+                vendor: Huawei
+                model: MX
+
+        node3:
+            kind: huawei_vrp
+            image: vrnetlab/huawei_vrp:ne40e-8.180
+            startup-config: node3.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: node3
+                platform: Ne40e
+                vendor: Huawei
+                model: MX
+
+        br-lab:
+            kind: bridge
+
+    links:
+        - endpoints: ["node1:eth1", "node2:eth1"]
+        - endpoints: ["node2:eth2", "node3:eth2"]
+        - endpoints: ["node3:eth1", "node1:eth2"]
+        - endpoints: ["node1:eth10", "br-lab:eth10"]
+        - endpoints: ["node2:eth10", "br-lab:eth11"]
+        - endpoints: ["node3:eth10", "br-lab:eth12"]

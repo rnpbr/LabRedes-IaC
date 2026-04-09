@@ -1,0 +1,13 @@
+snmp-agent trap type base-trap
+
+acl number 2001
+ rule 5 permit source 172.10.10.0 0.0.0.255
+
+{# configurações de interface abaixo #}
+
+{# Configuração da comunity feita em cifra no caso abaixo configura-se a comunity pulico1 #}
+
+snmp-agent
+snmp-agent acl 2001
+snmp-agent community read cipher %^%#e_%K6uE+X5:z0j&l4$B.xqSo"iETQ>em)X,vM4CYrj*VM%%)eB0|D:3Z._MLN`$W'A\w)C(hvmYU7{c:%^%#
+snmp-agent sys-info version v2c v3

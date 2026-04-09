@@ -1,0 +1,18 @@
+configure
+set snmp routing-instance-access
+set snmp community test routing-instance mgmt_junos
+{%- for interface in device.interfaces.all() %}
+{%- if interface.ip_addresses.all() %}
+{%- for ip in interface.ip_addresses.all() %}
+set interfaces {{ interface.name.split('.')[0].split(':')[0] }} unit 0 family inet address {{ip}}
+{%- endfor %}
+{%- endif %}
+{%- endfor %}
+
+
+{%- for interface in device.interfaces.all() %}
+{%- if interface.ip_addresses.all() %}
+set protocols ospf area 0.0.0.10 interface {{interface.name.split('.')[0].split(':')[0]}}
+{%- endif %}
+{%- endfor %}
+commit

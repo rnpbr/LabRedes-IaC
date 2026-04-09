@@ -1,0 +1,22 @@
+bgp:
+- group: <Group Name>
+  local_as: <AS>
+  neighbors:
+  - as: <Neighbor AS>
+    ip: <Neighbor Addresses>
+  - as: <Neighbor AS>
+    ip: <Neighbor Addresses>
+- group: <Group Name>
+  local_as: <AS>
+  neighbors:
+  - as: <Neighbor AS>
+    ip: <Neighbor Addresses>
+  - as: <Neighbor AS>
+    ip: <Neighbor Addresses>
+- group: <Group Name>
+  local_as: <AS>
+  neighbors:
+  - as: <Neighbor AS>
+    ip: <Neighbor Addresses>
+  - as: <Neighbor AS>
+    ip: <Neighbor Addresses>

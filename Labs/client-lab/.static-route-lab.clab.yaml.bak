@@ -1,0 +1,51 @@
+name: static-route-lab
+topology:
+    nodes:
+        graphite:
+            kind: linux
+            image: netreplica/graphite:latest
+            env:
+                HOST_CONNECTION: ${SSH_CONNECTION}
+            binds:
+                - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+                - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+            ports:
+                - 8080:80
+            exec:
+                - sh -c 'graphite_motd.sh 8080'
+            labels:
+                graph-hide: yes
+
+        RR2:
+            kind: juniper_vjunosevolved
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: RR2.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-RR
+                platform: junos
+                vendor: Juniper
+                model: MX
+
+        AM:
+            kind: juniper_vjunosevolved
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: AM.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-AM
+                platform: junos
+                vendor: Juniper
+                model: MX
+
+        br-lab:
+            kind: bridge
+
+    links:
+        - endpoints: ["AM:eth1", "RR2:eth3"]
+        - endpoints: ["AM:eth5", "br-lab:eth19"]
+        - endpoints: ["RR2:eth5", "br-lab:eth20"]

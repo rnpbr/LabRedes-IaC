@@ -1,0 +1,51 @@
+orb:
+  config_manager:
+    active: local
+  backends:
+    snmp_discovery:
+    network_discovery:
+    common:
+      diode:
+        target: grpc://${DIODE_HOST}/diode
+        client_id: ${DIODE_CLIENT_ID}
+        client_secret: ${DIODE_CLIENT_SECRET}
+        agent_name: ${AGENT_NAME}
+  policies:
+    network_discovery:
+      network_policy_1:
+        config:
+          timeout: 5
+          defaults:
+            description: "IP discovery by network discovery"
+            tags: ["network-discovery"]
+        scope:
+          targets:
+            - ${DOCKER_SUBNET}
+    snmp_discovery:
+      snmp_policy_1:
+        config:
+          timeout: 300
+          snmp_timeout: 10
+          retries: 3
+          defaults:
+            site: ${SITE_NAME}
+            tags: ["snmp-discovery"]
+            role: "router"
+            device:
+              description: "Device discovery by SNMP discovery"
+            interface:
+              description: "Interface discovery by SNMP discovery"
+              if_type: "virtual"
+            ip_address:
+              description: "Ip discovery by SNMP discovery"
+              tenant: "RNP"
+              vrf: "management"
+          lookup_extensions_dir: "/opt/orb/snmp-extensions"
+        scope:
+          targets:
+            - host: "172.10.10.201"
+            - host: "172.10.10.202"
+            - host: "172.10.10.203"
+          authentication:
+            protocol_version: "SNMPv2c"
+            community: ${MULTIVENDOR_COMMUNITY}

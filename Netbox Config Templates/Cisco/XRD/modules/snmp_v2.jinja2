@@ -1,0 +1,11 @@
+{# transport input ssh #}
+{# ! #}
+snmp-server community public RO IPv4 snmp-acl
+netconf-yang agent
+ ssh
+!
+ipv4 access-list snmp-acl
+ 10 permit ipv4 172.10.10.0 0.0.0.255 any
+ 20 deny ipv4 any any
+!
+{# interface MgmtEth0/RP0/CPU0/0 #}

@@ -1,0 +1,104 @@
+name: 4-nodes-traffic-lab
+topology:
+    nodes:
+        graphite:
+            kind: linux
+            image: netreplica/graphite:latest
+            env:
+                HOST_CONNECTION: ${SSH_CONNECTION}
+            binds:
+                - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+                - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+            ports:
+                - 8080:80
+            exec:
+                - sh -c 'graphite_motd.sh 8080'
+            labels:
+                graph-hide: yes
+
+        PR:
+            kind: juniper_vjunosevolved
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: PR.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-PR
+                platform: junos
+                vendor: Juniper
+                model: MX
+
+        SP:
+            kind: juniper_vjunosevolved
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: SP.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-SP
+                platform: junos
+                vendor: Juniper
+                model: MX
+
+        RS:
+            kind: juniper_vjunosevolved
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: RS.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-RS
+                platform: junos
+                vendor: Juniper
+                model: MX
+
+        SC:
+            kind: juniper_vjunosevolved
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: SC.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-SC
+                platform: junos
+                vendor: Juniper
+                model: MX
+                
+        client1:
+            kind: linux
+            image: ghcr.io/srl-labs/network-multitool
+            exec:
+                - ip address add 192.168.1.2/24 dev eth1
+                - ip route add 192.168.2.0/24 via 192.168.1.1 dev eth1
+            binds:
+                - client1:/config
+            group: server
+                  
+        client2:
+            kind: linux
+            image: ghcr.io/srl-labs/network-multitool
+            exec:
+                - ip address add 192.168.2.2/24 dev eth1
+                - ip route add 192.168.1.0/24 via 192.168.2.1 dev eth1
+                - iperf3 -s -p 5102 -D > iperf3_1.log
+            group: server
+
+        br-lab:
+            kind: bridge
+        
+    links:
+        - endpoints: ["PR:eth1", "SP:eth1"]
+        - endpoints: ["PR:eth2", "RS:eth2"]
+        - endpoints: ["PR:eth3", "SC:eth1"]
+        - endpoints: ["RS:eth1", "SC:eth2"]
+        - endpoints: ["RS:eth3", "SP:eth2"]
+        - endpoints: ["client1:eth1", "SP:eth3"]
+        - endpoints: ["client2:eth1", "SC:eth3"]
+        - endpoints: ["PR:eth4", "br-lab:eth1"]
+        - endpoints: ["RS:eth4", "br-lab:eth2"]
+        - endpoints: ["SP:eth4", "br-lab:eth3"]
+        - endpoints: ["SC:eth4", "br-lab:eth4"]

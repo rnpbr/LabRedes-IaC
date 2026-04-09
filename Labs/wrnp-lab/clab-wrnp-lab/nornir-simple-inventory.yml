@@ -1,0 +1,36 @@
+---
+br-lab:
+    username: 
+    password: 
+    platform: bridge
+    hostname: 
+BA:
+    username: admin
+    password: admin@123
+    platform: juniper_vjunosrouter
+    hostname: 172.20.20.6
+ES:
+    username: admin
+    password: admin@123
+    platform: juniper_vjunosrouter
+    hostname: 172.20.20.2
+MG:
+    username: admin
+    password: admin@123
+    platform: juniper_vjunosrouter
+    hostname: 172.20.20.3
+client1:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.4
+client2:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.5
+graphite:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.7

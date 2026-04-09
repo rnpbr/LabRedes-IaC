@@ -1,0 +1,20 @@
+{%- for interface in device.interfaces.all() -%}
+{%- set name = interface.name.split('.')[0].split(':')[0] -%}
+{%- set ip_list = interface.ip_addresses.all() -%}
+{% if ip_list | length >= 1 %}
+
+interface {{ name }}
+ undo shutdown
+ ip address {{ ip_list[0].address.ip }} {{ ip_list[0].address.netmask }}
+ {%- if ip_list | length >= 2 %}
+ ipv6 enable
+ ipv6 address {{ ip_list[1].address }}
+{%- endif %}
+{%- endif %}
+ lldp enable {# habilita o lldp nas interfaces #}
+{%- endfor %}
+
+interface Ethernet1/0/9
+ undo shutdown
+ ip address {{ lab[device.name].ipv4 }} 255.255.255.0
+ lldp enable

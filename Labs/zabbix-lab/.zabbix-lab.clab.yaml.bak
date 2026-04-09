@@ -1,0 +1,51 @@
+name: zabbix-lab
+topology:
+    nodes:
+        graphite:
+            kind: linux
+            image: netreplica/graphite:latest
+            env:
+                HOST_CONNECTION: ${SSH_CONNECTION}
+            binds:
+                - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+                - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+            ports:
+                - 8080:80
+            exec:
+                - sh -c 'graphite_motd.sh 8080'
+            labels:
+                graph-hide: yes
+
+        BA:
+            kind: juniper_vjunosrouter
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: BA.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-BA
+                platform: junos
+                vendor: Juniper
+                model: MX
+
+        ES:
+            kind: juniper_vjunosrouter
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: ES.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-ES
+                platform: junos
+                vendor: Juniper
+                model: MX
+        br-lab:
+            kind: bridge
+
+    links:
+        - endpoints: ["BA:eth1", "ES:eth1"]
+        - endpoints: ["BA:eth4", "ES:eth4"]
+        - endpoints: ["BA:eth10", "br-lab:eth15"]
+        - endpoints: ["ES:eth10", "br-lab:eth16"]

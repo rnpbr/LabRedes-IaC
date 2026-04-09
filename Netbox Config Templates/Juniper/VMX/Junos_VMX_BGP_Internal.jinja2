@@ -1,0 +1,21 @@
+configure
+{%- for interface in device.interfaces.all() %}
+{%- if interface.ip_addresses.all() %}
+{%- for ip in interface.ip_addresses.all() %}
+set interfaces {{ interface.name.split('.')[0].split(':')[0] }} unit 0 family inet address {{ip}}
+{%- endfor %}
+{%- endif %}
+{%- endfor %}
+
+{%- for group in bgp %}
+{%- if group.group == device.name %}
+set protocols bgp group {{ group.group }} type internal
+set protocols bgp group {{ group.group }} local-as {{ group.local_as }}
+
+{%- for neighbor in group.neighbors %}
+set protocols bgp group {{ group.group }} neighbor {{ neighbor.ip }} peer-as {{ group.local_as }}
+{%- endfor %}
+
+commit and-quit
+{%- endif %}
+{%- endfor %}

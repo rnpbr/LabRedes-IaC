@@ -1,0 +1,67 @@
+name: monitoramentomento-zabbix-cisco
+topology:
+    nodes:
+        graphite:
+            kind: linux
+            image: netreplica/graphite:latest
+            env:
+                HOST_CONNECTION: ${SSH_CONNECTION}
+            binds:
+                - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+                - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+            ports:
+                - 8080:80
+            exec:
+                - sh -c 'graphite_motd.sh 8080'
+            labels:
+                graph-hide: yes
+
+        node1:
+            kind: cisco_xrd
+            image: xrd-control-plane:7.10.2
+            startup-config: node1.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: node1
+                platform: IOS XR
+                vendor: Cisco
+                model: XRD
+
+        node2:
+            kind: cisco_xrd
+            image: xrd-control-plane:7.10.2
+            startup-config: node2.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: node2
+                platform: IOS XR
+                vendor: Cisco
+                model: XRD
+
+        node3:
+            kind: cisco_xrd
+            image: xrd-control-plane:7.10.2
+            startup-config: node3.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: node3
+                platform: IOS XR
+                vendor: Cisco
+                model: XRD
+
+        br-lab:
+            kind: bridge
+
+    links:
+        - endpoints: ["node1:Gi0-0-0-0", "node2:Gi0-0-0-0"]
+        - endpoints: ["node2:Gi0-0-0-1", "node3:Gi0-0-0-1"]
+        - endpoints: ["node3:Gi0-0-0-0", "node1:Gi0-0-0-1"]
+        - endpoints: ["node1:Gi0-0-0-9", "br-lab:eth13"]
+        - endpoints: ["node2:Gi0-0-0-9", "br-lab:eth14"]
+        - endpoints: ["node3:Gi0-0-0-9", "br-lab:eth15"]

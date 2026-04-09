@@ -1,0 +1,67 @@
+name: logs-telegraf-multvendor
+topology:
+  nodes:
+    graphite:
+      kind: linux
+      image: netreplica/graphite:latest
+      env:
+        HOST_CONNECTION: ${SSH_CONNECTION}
+      binds:
+        - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+        - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+      ports:
+        - 1111:80
+      exec:
+        - sh -c 'graphite_motd.sh 8080'
+      labels:
+        graph-hide: yes
+
+    node1:
+      kind: juniper_vjunosrouter
+      image: vrnetlab/juniper_vjunos-router:23.2R1.15
+      startup-config: node1.config
+      labels:
+        graph-icon: core
+        graph-level: 10
+        role: Core
+        group: node1
+        platform: junos
+        vendor: Juniper
+        model: MX
+
+    node2:
+      kind: cisco_xrd
+      image: xrd-control-plane:7.10.2
+      startup-config: node2.config
+      labels:
+        graph-icon: core
+        graph-level: 10
+        role: Core
+        group: node2
+        platform: xrd-control-plane
+        vendor: Cisco
+        model: MX
+
+    node3:
+      kind: huawei_vrp
+      image: vrnetlab/huawei_vrp:ne40e-8.180
+      startup-config: node3.config
+      labels:
+        graph-icon: core
+        graph-level: 10
+        role: Core
+        group: node3
+        platform: Ne40e
+        vendor: Huawei
+        model: MX
+
+    br-lab:
+      kind: bridge
+
+  links:
+    - endpoints: [ node1:eth1, node2:Gi0-0-0-0 ]
+    - endpoints: [ node2:Gi0-0-0-1, node3:eth2 ]
+    - endpoints: [ node3:eth1, node1:eth2 ]
+    - endpoints: [ node1:eth10, br-lab:eth13 ]
+    - endpoints: [ node2:Gi0-0-0-9, br-lab:eth14 ]
+    - endpoints: [ node3:eth10, br-lab:eth15 ]

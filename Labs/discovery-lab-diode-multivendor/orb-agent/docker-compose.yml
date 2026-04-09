@@ -1,0 +1,9 @@
+services:
+  orb-agent:
+    image: docker.io/netboxlabs/orb-agent:latest
+    command: run -c /opt/orb/agent.yaml --debug
+    volumes: 
+      - ./:/opt/orb/
+networks:
+  br-lab:
+    external: true

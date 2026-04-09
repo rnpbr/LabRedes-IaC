@@ -1,0 +1,11 @@
+services:
+  orb-agent:
+    image: docker.io/netboxlabs/orb-agent:latest
+    command: run -c /opt/orb/agent.yaml --debug
+    volumes: 
+      - ./:/opt/orb/
+    #environment:
+      # - INSTALL_DRIVERS_PATH=/opt/orb/drivers.txt
+networks:
+  br-lab:
+    external: true

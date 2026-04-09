@@ -1,0 +1,68 @@
+name: telegraf-lab
+topology:
+    nodes:
+        graphite:
+            kind: linux
+            image: netreplica/graphite:latest
+            env:
+                HOST_CONNECTION: ${SSH_CONNECTION}
+            binds:
+                - __clabDir__/topology-data.json:/htdocs/default/default.json:ro
+                - __clabDir__/ansible-inventory.yml:/htdocs/lab/default/ansible-inventory.yml:ro
+            ports:
+                - 8080:80
+            exec:
+                - sh -c 'graphite_motd.sh 8080'
+            labels:
+                graph-hide: yes
+
+        GO:
+            kind: juniper_vjunosrouter
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: GO.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-GO
+                platform: junos
+                vendor: Juniper
+                model: MX
+
+        MT:
+            kind: juniper_vjunosrouter
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: MT.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-MT
+                platform: junos
+                vendor: Juniper
+                model: MX
+
+        MS:
+            kind: juniper_vjunosrouter
+            image: vrnetlab/vr-vjunosrouter:23.2R1.15
+            startup-config: MS.config
+            labels:
+                graph-icon: core
+                graph-level: 10
+                role: Core
+                group: PoP-MS
+                platform: junos
+                vendor: Juniper
+                model: MX
+        br-lab:
+            kind: bridge
+          
+
+    links:
+        - endpoints: ["GO:eth1", "MT:eth2"]
+        - endpoints: ["MT:eth1", "MS:eth2"]
+        - endpoints: ["MS:eth1", "GO:eth2"]
+        - endpoints: ["MS:eth10", "br-lab:eth10"]
+        - endpoints: ["MT:eth10", "br-lab:eth11"]
+        - endpoints: ["GO:eth10", "br-lab:eth12"]
+

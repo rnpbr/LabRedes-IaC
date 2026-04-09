@@ -1,0 +1,330 @@
+{
+  "stack": {
+    "librenms": {
+      "db": "172.10.10.100",
+      "redis": "172.10.10.101",
+      "msmtpd": "172.10.10.102",
+      "librenms": "172.10.10.103",
+      "dispatcher": "172.10.10.104",
+      "syslogng": "172.10.10.105",
+      "snmptrapd": "172.10.10.106"
+    },
+    "ELK": {
+      "setup": "172.10.10.107",
+      "elasticsearch": "172.10.10.108",
+      "kibana": "172.10.10.109",
+      "fleet": "172.10.10.110"
+    },
+    "Telegraf": {
+      "grafana": "172.10.10.111",
+      "influxdb": "172.10.10.112",
+      "chronograf": "172.10.10.113",
+      "telegraf": "172.10.10.114"
+    },
+    "Zabbix": {
+      "server": "172.10.10.115",
+      "frontend": "172.10.10.116",
+      "agent": "172.10.10.117",
+      "database": "172.10.10.118"
+    }
+  },
+
+  "lab": {
+    "AC": {
+      "state": "AC",
+      "capital": "Rio Branco",
+      "ipv4": "172.10.10.2",
+      "ipv6": "fd00::175",
+      "latitude": -9.97499,
+      "longitude": -67.8243
+    },
+    "AL": {
+      "state": "AL",
+      "capital": "Maceió",
+      "ipv4": "172.10.10.3",
+      "ipv6": "fd00::176",
+      "latitude": -9.66599,
+      "longitude": -35.735
+    },
+    "AM": {
+      "state": "AM",
+      "capital": "Manaus",
+      "ipv4": "172.10.10.4",
+      "ipv6": "fd00::177",
+      "latitude": -3.11903,
+      "longitude": -60.02173
+    },
+    "AP": {
+      "state": "AP",
+      "capital": "Macapá",
+      "ipv4": "172.10.10.5",
+      "ipv6": "fd00::178",
+      "latitude": 0.03493,
+      "longitude": -51.06939
+    },
+    "BA": {
+      "state": "BA",
+      "capital": "Salvador",
+      "ipv4": "172.10.10.6",
+      "ipv6": "fd00::179",
+      "latitude": -12.9714,
+      "longitude": -38.5124
+    },
+    "CE": {
+      "state": "CE",
+      "capital": "Fortaleza",
+      "ipv4": "172.10.10.7",
+      "ipv6": "fd00::180",
+      "latitude": -3.71722,
+      "longitude": -38.54342
+    },
+    "CE2": {
+      "state": "CE",
+      "capital": "Fortaleza",
+      "ipv4": "172.10.10.8",
+      "ipv6": "fd00::181",
+      "latitude": -3.71722,
+      "longitude": -38.54342
+    },
+    "DF": {
+      "state": "DF",
+      "capital": "Brasília",
+      "ipv4": "172.10.10.9",
+      "ipv6": "fd00::182",
+      "latitude": -15.82669,
+      "longitude": -47.92182
+    },
+    "DF2": {
+      "state": "DF",
+      "capital": "Brasília",
+      "ipv4": "172.10.10.10",
+      "ipv6": "fd00::183",
+      "latitude": -15.82669,
+      "longitude": -47.92182
+    },
+    "ES": {
+      "state": "ES",
+      "capital": "Vitória",
+      "ipv4": "172.10.10.11",
+      "ipv6": "fd00::184",
+      "latitude": -20.3155,
+      "longitude": -40.31278
+    },
+    "GO": {
+      "state": "GO",
+      "capital": "Goiânia",
+      "ipv4": "172.10.10.12",
+      "ipv6": "fd00::185",
+      "latitude": -16.68688,
+      "longitude": -49.26479
+    },
+    "JPA": {
+      "state": "PB",
+      "capital": "João Pessoa",
+      "ipv4": "172.10.10.13",
+      "ipv6": "fd00::186",
+      "latitude": -7.11509,
+      "longitude": -34.86411
+    },
+    "MA": {
+      "state": "MA",
+      "capital": "São Luís",
+      "ipv4": "172.10.10.14",
+      "ipv6": "fd00::187",
+      "latitude": -2.53874,
+      "longitude": -44.2829
+    },
+    "MG": {
+      "state": "MG",
+      "capital": "Belo Horizonte",
+      "ipv4": "172.10.10.15",
+      "ipv6": "fd00::188",
+      "latitude": -19.92083,
+      "longitude": -43.93778
+    },
+    "MG2": {
+      "state": "MG",
+      "capital": "Belo Horizonte",
+      "ipv4": "172.10.10.16",
+      "ipv6": "fd00::189",
+      "latitude": -19.92083,
+      "longitude": -43.93778
+    },
+    "MS": {
+      "state": "MS",
+      "capital": "Campo Grande",
+      "ipv4": "172.10.10.17",
+      "ipv6": "fd00::190",
+      "latitude": -20.46971,
+      "longitude": -54.62012
+    },
+    "MT": {
+      "state": "MT",
+      "capital": "Cuiabá",
+      "ipv4": "172.10.10.18",
+      "ipv6": "fd00::191",
+      "latitude": -15.60141,
+      "longitude": -56.09789
+    },
+    "PA": {
+      "state": "PA",
+      "capital": "Belém",
+      "ipv4": "172.10.10.19",
+      "ipv6": "fd00::192",
+      "latitude": -1.45502,
+      "longitude": -48.50236
+    },
+    "PA2": {
+      "state": "PA",
+      "capital": "Belém",
+      "ipv4": "172.10.10.20",
+      "ipv6": "fd00::193",
+      "latitude": -1.45502,
+      "longitude": -48.50236
+    },
+    "PB": {
+      "state": "PB",
+      "capital": "João Pessoa",
+      "ipv4": "172.10.10.21",
+      "ipv6": "fd00::194",
+      "latitude": -7.11509,
+      "longitude": -34.86411
+    },
+    "PE": {
+      "state": "PE",
+      "capital": "Recife",
+      "ipv4": "172.10.10.22",
+      "ipv6": "fd00::195",
+      "latitude": -8.04756,
+      "longitude": -34.877
+    },
+    "PI": {
+      "state": "PI",
+      "capital": "Teresina",
+      "ipv4": "172.10.10.23",
+      "ipv6": "fd00::196",
+      "latitude": -5.08921,
+      "longitude": -42.8016
+    },
+    "PR": {
+      "state": "PR",
+      "capital": "Curitiba",
+      "ipv4": "172.10.10.24",
+      "ipv6": "fd00::197",
+      "latitude": -25.41943,
+      "longitude": -49.26449
+    },
+    "PR2": {
+      "state": "PR",
+      "capital": "Curitiba",
+      "ipv4": "172.10.10.25",
+      "ipv6": "fd00::198",
+      "latitude": -25.41943,
+      "longitude": -49.26449
+    },
+    "RJ": {
+      "state": "RJ",
+      "capital": "Rio de Janeiro",
+      "ipv4": "172.10.10.26",
+      "ipv6": "fd00::199",
+      "latitude": -22.90685,
+      "longitude": -43.1729
+    },
+    "RJ2": {
+      "state": "RJ",
+      "capital": "Rio de Janeiro",
+      "ipv4": "172.10.10.27",
+      "ipv6": "fd00::200",
+      "latitude": -22.90685,
+      "longitude": -43.1729
+    },
+    "RN": {
+      "state": "RN",
+      "capital": "Natal",
+      "ipv4": "172.10.10.28",
+      "ipv6": "fd00::201",
+      "latitude": -5.79448,
+      "longitude": -35.211
+    },
+    "RO": {
+      "state": "RO",
+      "capital": "Porto Velho",
+      "ipv4": "172.10.10.29",
+      "ipv6": "fd00::202",
+      "latitude": -8.76116,
+      "longitude": -63.90389
+    },
+    "RR": {
+      "state": "RR",
+      "capital": "Boa Vista",
+      "ipv4": "172.10.10.30",
+      "ipv6": "fd00::203",
+      "latitude": 2.8235,
+      "longitude": -60.67527
+    },
+    "RR2": {
+      "state": "RR",
+      "capital": "Boa Vista",
+      "ipv4": "172.10.10.31",
+      "ipv6": "fd00::204",
+      "latitude": 2.8235,
+      "longitude": -60.67527
+    },
+    "RS": {
+      "state": "RS",
+      "capital": "Porto Alegre",
+      "ipv4": "172.10.10.32",
+      "ipv6": "fd00::205",
+      "latitude": -30.03465,
+      "longitude": -51.21766
+    },
+    "RS2": {
+      "state": "RS",
+      "capital": "Porto Alegre",
+      "ipv4": "172.10.10.33",
+      "ipv6": "fd00::206",
+      "latitude": -30.03465,
+      "longitude": -51.21766
+    },
+    "SC": {
+      "state": "SC",
+      "capital": "Florianópolis",
+      "ipv4": "172.10.10.34",
+      "ipv6": "fd00::207",
+      "latitude": -27.59538,
+      "longitude": -48.54805
+    },
+    "SE": {
+      "state": "SE",
+      "capital": "Aracaju",
+      "ipv4": "172.10.10.35",
+      "ipv6": "fd00::208",
+      "latitude": -10.94725,
+      "longitude": -37.07308
+    },
+    "SP": {
+      "state": "SP",
+      "capital": "São Paulo",
+      "ipv4": "172.10.10.36",
+      "ipv6": "fd00::209",
+      "latitude": -23.55052,
+      "longitude": -46.6333
+    },
+    "SP2": {
+      "state": "SP",
+      "capital": "São Paulo",
+      "ipv4": "172.10.10.37",
+      "ipv6": "fd00::210",
+      "latitude": -23.55052,
+      "longitude": -46.6333
+    },
+    "TO": {
+      "state": "TO",
+      "capital": "Palmas",
+      "ipv4": "172.10.10.38",
+      "ipv6": "fd00::211",
+      "latitude": -10.18421,
+      "longitude": -48.33367
+    }
+  }
+}

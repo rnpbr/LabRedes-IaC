@@ -1,0 +1,88 @@
+chassis {
+    fpc 0 {
+        sampling-instance instance-1;
+        inline-services {
+            flow-table-size {
+                ipv4-flow-table-size 7;
+            }
+        }
+    }
+}
+services {
+    flow-monitoring {
+        version-ipfix {
+            template ipix {
+                flow-active-timeout 100;
+                flow-inactive-timeout 50;
+                template-refresh-rate {
+                    seconds 10;
+                }
+                ipv4-template;
+            }
+        }
+    }
+interfaces {
+{%- for interface in device.interfaces.all() -%}
+    {%- set name = interface.name.split('.')[0].split(':')[0] -%}
+    {%- set ip_list = interface.ip_addresses.all() -%}
+    {%- if ip_list | length >= 1 -%}
+    {{ name }} {
+        unit 0 {
+            family inet {
+                filter {
+                    input inet-sample;
+                }
+                address {{ ip_list[0].address }};
+            }
+            {%- if ip_list | length >= 2 %}
+            family inet6 {
+                filter {
+                    input inet-sample;
+                }
+                address {{ ip_list[1].address }};
+            }
+            {%- endif %}
+        }
+    }
+    {%- endif %}
+{%- endfor %}
+}
+forwarding-options {
+    sampling {
+        instance {
+            instance-1 {
+                input {
+                    rate 1;
+                }
+                family inet {
+                    output {
+                        flow-server 172.10.10.110 {
+                            port 2055;
+                            version-ipfix {
+                                template {
+                                    ipix;
+                                }
+                            }
+                        }
+                        inline-jflow {
+                            source-address 172.10.10.<IP Router>;
+                            flow-export-rate 6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+firewall {
+    family inet {
+        filter inet-sample {
+            term t1 {
+                then {
+                    sample;
+                    accept;
+                }
+            }
+        }
+    }
+}

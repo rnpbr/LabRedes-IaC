@@ -1,0 +1,13 @@
+{# -end ! #}
+{% endraw %}
+router ospf 1
+ address-family ipv4 unicast
+ area 0.0.0.10
+{%- for interface in device.interfaces.all() %}
+  interface {{ interface.name.split('.')[0].split(':')[0] }}
+  !
+{%- endfor %}
+ !
+!
+{% raw %}
+{# ssh server v2#}
